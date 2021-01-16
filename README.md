@@ -2,6 +2,8 @@
 
 ## Basics
 
+Inspired by [this article](https://phoenixnap.com/kb/docker-redis).
+
 1. start first Redis container with
 
 ~~~sh
@@ -50,6 +52,8 @@ redis-cli -h [host or IP] -p [port_number] -a [password]
 9. get the value for the key _name_ with `get name`
 
 ## Play around with Redis + Redis commander
+
+Inspired by [this article](https://medium.com/@ivfomini/how-to-configure-redis-redis-commander-docker-f4226dc66d0c).
 
 1. boot the 2 images (Redis + Redis commander)
 ~~~sh
