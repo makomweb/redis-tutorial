@@ -48,3 +48,32 @@ redis-cli -h [host or IP] -p [port_number] -a [password]
 ~~~
 
 9. get the value for the key _name_ with `get name`
+
+## Play around with Redis + Redis commander
+
+1. boot the 2 images (Redis + Redis commander)
+~~~sh
+docker-compose up -d
+~~~
+
+2. open the Redis commander with the credentials from the `docker-composer.yaml`
+~~~sh
+http://localhost:8081
+~~~
+
+3. open an interactive shell on the Redis container
+~~~sh
+docker exec -it redis-tutorial_redis_1 sh
+~~~
+
+4. open a Redis CLI on the redis image
+~~~sh
+redis-cli
+~~~
+
+5. create a key value pair with
+~~~sh
+set name foo
+~~~
+
+6. check the object tree from the browser
