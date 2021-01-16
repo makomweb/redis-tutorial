@@ -32,9 +32,9 @@ set name foo
 
 5. quit the Redis CLI with `quit` and the interactive shell with `exit`
 
-6. start second Redis container with and link it to the first container (name will be redis)
+6. start second Redis container and link it to the first container (name will be redis)
 ~~~sh
-docker run -it --rm --name my-second-redis --link my-first-redis:redis -d redis`
+docker run -it --rm --name my-second-redis --link my-first-redis:redis -d redis
 ~~~
 
 7. open an interactive shell on the second redis container with
