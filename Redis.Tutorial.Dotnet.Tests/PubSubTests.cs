@@ -52,7 +52,21 @@ namespace Redis.Tutorial.Dotnet.Tests
 
             await TaskUtils.WaitWhile(() => received == null);
 
-            Assert.AreEqual("payload", received);
+            Assert.AreEqual("payload", received, "We should have received a message!");
+        }
+
+        [Test]
+        public async Task Receiving_2_messages_should_succeed()
+        {
+            var received = 0;
+
+            _fixture.Subscribe(_ => received++);
+            _fixture.Publish("Message 1");
+            _fixture.Publish("Message 2");
+
+            await TaskUtils.WaitUntil(() => received == 2);
+
+            Assert.AreEqual(2, received, "We should have received 2 messages!");
         }
     }
 }
