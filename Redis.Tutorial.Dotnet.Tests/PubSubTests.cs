@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using StackExchange.Redis;
 using System;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 
 namespace Redis.Tutorial.Dotnet.Tests
@@ -27,6 +28,15 @@ namespace Redis.Tutorial.Dotnet.Tests
 
                 new RedisSubscriber(_redis, CHANNEL).Subscribe(action);
             }
+
+            internal IObservable<string> Messages
+            {
+                get
+                {
+                    return new RedisEventSubscriber(_redis, CHANNEL)
+                        .Events
+                        .Select(obj => (string)obj.Message);
+                }
             }
 
             internal void Publish(string message)
@@ -64,6 +74,22 @@ namespace Redis.Tutorial.Dotnet.Tests
             _fixture.Publish("Message 2");
 
             await TaskUtils.WaitUntil(() => received == 2);
+
+            Assert.AreEqual(2, received, "We should have received 2 messages!");
+        }
+
+        [Test]
+        public async Task Observable_implementation_should_receive_2_messages()
+        {
+            var received = 0;
+
+            using (_fixture.Messages.Subscribe(msg => received++))
+            {
+                _fixture.Publish("Message 1");
+                _fixture.Publish("Message 2");
+            }
+
+            await TaskUtils.WaitUntil(() => received == 2, 25, 300);
 
             Assert.AreEqual(2, received, "We should have received 2 messages!");
         }
