@@ -24,7 +24,12 @@ namespace Redis.Tutorial.Dotnet.Tests
 
             internal void Subscribe(Action<string> onMessage)
             {
-                var action = new Action<ChannelMessage>(msg => onMessage(msg.Message));
+                var action = new Action<ChannelMessage>(msg =>
+                {
+                    var payload = msg.Message;
+                    var s = (string)payload;
+                    onMessage(s);
+                });
                 _subscriber.Subscribe(CHANNEL_NAME, action);
             }
 
@@ -48,9 +53,9 @@ namespace Redis.Tutorial.Dotnet.Tests
             _fixture.Subscribe(msg => received = msg);
             _fixture.Publish("payload");
 
-            Assert.AreEqual("payload", received);
+            await TaskUtils.WaitWhile(() => received == null);
 
-            await Task.Delay(100);
+            Assert.AreEqual("payload", received);
         }
     }
 }
