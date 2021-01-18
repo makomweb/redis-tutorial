@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using StackExchange.Redis;
-using System;
+﻿using StackExchange.Redis;
 
 namespace Redis.Tutorial.Dotnet
 {
@@ -17,7 +15,7 @@ namespace Redis.Tutorial.Dotnet
         public dynamic Read(string key)
         {
             var json = _db.StringGet(key);
-            return JsonConvert.DeserializeObject<dynamic>(json);
+            return JsonDecoder.Deserialize(json);
         }
     }
 }
