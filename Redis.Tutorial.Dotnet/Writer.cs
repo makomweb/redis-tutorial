@@ -4,12 +4,11 @@ namespace Redis.Tutorial.Dotnet
 {
     public class RedisWriter
     {
-        readonly ConnectionMultiplexer _redis = ConnectionMultiplexer.Connect("localhost");
         readonly IDatabase _db;
 
-        public RedisWriter()
+        public RedisWriter(ConnectionMultiplexer redis)
         {
-            _db = _redis.GetDatabase();
+            _db = redis.GetDatabase();
         }
 
         public void Store<T>(string key, T value)

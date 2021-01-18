@@ -4,12 +4,11 @@ namespace Redis.Tutorial.Dotnet
 {
     public class RedisReader
     {
-        readonly ConnectionMultiplexer _redis = ConnectionMultiplexer.Connect("localhost");
         readonly IDatabase _db;
 
-        public RedisReader()
+        public RedisReader(ConnectionMultiplexer redis)
         {
-            _db = _redis.GetDatabase();
+            _db = redis.GetDatabase();
         }
 
         public dynamic Read(string key)
