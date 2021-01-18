@@ -12,14 +12,12 @@ namespace Redis.Tutorial.Dotnet.Tests
 
         class Fixture
         {
-            const string CHANNEL_NAME = "my-messages";
-            readonly RedisSubscriber _subscriber;
-            readonly RedisPublisher _publisher;
+            const string CHANNEL = "my-messages";
+            private readonly ConnectionMultiplexer _redis;
 
             public Fixture(ConnectionMultiplexer redis)
             {
-                _subscriber = new RedisSubscriber(redis);
-                _publisher = new RedisPublisher(redis);
+                _redis = redis;
             }
 
             internal void Subscribe(Action<string> onMessage)
@@ -27,12 +25,13 @@ namespace Redis.Tutorial.Dotnet.Tests
                 var action = new Action<ChannelMessage>(msg => 
                     onMessage(msg.Message));
 
-                _subscriber.Subscribe(CHANNEL_NAME, action);
+                new RedisSubscriber(_redis, CHANNEL).Subscribe(action);
+            }
             }
 
             internal void Publish(string message)
             {
-                _publisher.Publish(CHANNEL_NAME, message);
+                new RedisPublisher(_redis, CHANNEL).Publish(message);
             }
         }
 

@@ -6,15 +6,17 @@ namespace Redis.Tutorial.Dotnet
     public class RedisSubscriber
     {
         readonly ISubscriber _sub;
+        private readonly string _channel;
 
-        public RedisSubscriber(ConnectionMultiplexer redis)
+        public RedisSubscriber(ConnectionMultiplexer redis, string channel)
         {
             _sub = redis.GetSubscriber();
+            _channel = channel;
         }
 
-        public void Subscribe(string channel, Action<ChannelMessage> onMessage)
+        public void Subscribe(Action<ChannelMessage> onMessage)
         {
-            _sub.Subscribe(channel).OnMessage(onMessage);            
+            _sub.Subscribe(_channel).OnMessage(onMessage);            
         }
     }
 }

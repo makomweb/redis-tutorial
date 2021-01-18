@@ -5,15 +5,17 @@ namespace Redis.Tutorial.Dotnet
     public class RedisPublisher
     {
         readonly ISubscriber _sub;
+        private readonly string _channel;
 
-        public RedisPublisher(ConnectionMultiplexer redis)
+        public RedisPublisher(ConnectionMultiplexer redis, string channel)
         {
             _sub = redis.GetSubscriber();
+            _channel = channel;
         }
 
-        public void Publish(string channel, string message)
+        public void Publish(string message)
         {
-            _sub.Publish(channel, message);
+            _sub.Publish(_channel, message);
         }
     }
 }
