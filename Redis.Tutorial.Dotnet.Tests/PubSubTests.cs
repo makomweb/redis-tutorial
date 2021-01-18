@@ -24,12 +24,9 @@ namespace Redis.Tutorial.Dotnet.Tests
 
             internal void Subscribe(Action<string> onMessage)
             {
-                var action = new Action<ChannelMessage>(msg =>
-                {
-                    var payload = msg.Message;
-                    var s = (string)payload;
-                    onMessage(s);
-                });
+                var action = new Action<ChannelMessage>(msg => 
+                    onMessage(msg.Message));
+
                 _subscriber.Subscribe(CHANNEL_NAME, action);
             }
 
