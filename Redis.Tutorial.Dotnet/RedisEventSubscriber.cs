@@ -27,12 +27,18 @@ namespace Redis.Tutorial.Dotnet
                     subscription.OnMessage(msg =>
                     {
                         observer.OnNext(msg);
-                        observer.OnCompleted();
+                        //observer.OnCompleted();
                     });
                     return Disposable.Empty;
                 });
 
+#if false
+                var p = observable.Publish();
+                p.Connect();
+                return p;
+#else
                 return observable;
+#endif
             }
         }
     }

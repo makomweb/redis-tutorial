@@ -87,9 +87,9 @@ namespace Redis.Tutorial.Dotnet.Tests
             {
                 _fixture.Publish("Message 1");
                 _fixture.Publish("Message 2");
-            }
 
-            await TaskUtils.WaitUntil(() => received == 2, 25, 300);
+                await TaskUtils.WaitUntil(() => received == 2);
+            }
 
             Assert.AreEqual(2, received, "We should have received 2 messages!");
         }
