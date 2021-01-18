@@ -5,18 +5,18 @@ using System.Reactive.Linq;
 
 namespace Redis.Tutorial.Dotnet
 {
-    public class RedisEvents
+    public class RedisMessages
     {
         readonly ISubscriber _sub;
         private readonly string _channel;
 
-        public RedisEvents(ConnectionMultiplexer redis, string channel)
+        public RedisMessages(ConnectionMultiplexer redis, string channel)
         {
             _sub = redis.GetSubscriber();
             _channel = channel;
         }
 
-        public IObservable<ChannelMessage> Events
+        public IObservable<string> Messages
         {
             get
             {
@@ -37,7 +37,7 @@ namespace Redis.Tutorial.Dotnet
                 p.Connect();
                 return p;
 #else
-                return observable;
+                return observable.Select(msg => (string)msg.Message);
 #endif
             }
         }

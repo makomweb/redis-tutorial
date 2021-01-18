@@ -29,15 +29,8 @@ namespace Redis.Tutorial.Dotnet.Tests
                 new RedisSubscriber(_redis, CHANNEL).Subscribe(action);
             }
 
-            internal IObservable<string> Messages
-            {
-                get
-                {
-                    return new RedisEvents(_redis, CHANNEL)
-                        .Events
-                        .Select(obj => (string)obj.Message);
-                }
-            }
+            internal IObservable<string> Messages =>
+                new RedisMessages(_redis, CHANNEL).Messages;
 
             internal void Publish(string message)
             {
