@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace Redis.Tutorial.Dotnet.Tests
 {
-    public class Tests
+    public class ReadWriteTests
     {
         const string KEY = "my-key";
 
