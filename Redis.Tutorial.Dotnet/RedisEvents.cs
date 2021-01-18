@@ -5,12 +5,12 @@ using System.Reactive.Linq;
 
 namespace Redis.Tutorial.Dotnet
 {
-    public class RedisEventSubscriber
+    public class RedisEvents
     {
         readonly ISubscriber _sub;
         private readonly string _channel;
 
-        public RedisEventSubscriber(ConnectionMultiplexer redis, string channel)
+        public RedisEvents(ConnectionMultiplexer redis, string channel)
         {
             _sub = redis.GetSubscriber();
             _channel = channel;

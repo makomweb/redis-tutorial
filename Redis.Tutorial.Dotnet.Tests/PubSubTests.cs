@@ -33,7 +33,7 @@ namespace Redis.Tutorial.Dotnet.Tests
             {
                 get
                 {
-                    return new RedisEventSubscriber(_redis, CHANNEL)
+                    return new RedisEvents(_redis, CHANNEL)
                         .Events
                         .Select(obj => (string)obj.Message);
                 }
